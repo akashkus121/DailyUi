@@ -1,0 +1,108 @@
+:root {
+  --dash-bg: #030712;
+  --glass: rgba(255, 255, 255, 0.03);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --accent: #6366f1;
+}
+
+.dashboard-root {
+  background-color: var(--dash-bg);
+  min-height: 100vh;
+  padding: 2rem 5%;
+  color: white;
+  font-family: 'Inter', sans-serif;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.glow-1 { position: absolute; top: -10%; left: -10%; width: 40%; height: 40%; background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 70%); filter: blur(100px); }
+.glow-2 { position: absolute; bottom: -5%; right: -5%; width: 30%; height: 30%; background: radial-gradient(circle, rgba(16, 185, 129, 0.05) 0%, transparent 70%); filter: blur(100px); }
+
+.dash-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2.5rem; position: relative; z-index: 10; }
+.welcome-section h1 { font-size: 2.25rem; font-weight: 800; letter-spacing: -0.025em; }
+.welcome-section p { color: #9ca3af; margin-top: 0.5rem; }
+
+.quick-actions { display: flex; gap: 0.75rem; }
+.glass-action, .ai-trigger {
+  padding: 0.6rem 1.2rem;
+  border-radius: 12px;
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+.ai-trigger { background: var(--accent); border: none; box-shadow: 0 8px 20px -4px rgba(99,102,241,0.4); }
+.glass-action:hover { background: rgba(255,255,255,0.08); transform: translateY(-2px); }
+
+/* Bento Grid */
+.bento-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  position: relative;
+  z-index: 10;
+}
+.span-2 { grid-column: span 2; }
+.span-3 { grid-column: span 3; }
+
+.bento-item {
+  background: var(--glass);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+}
+.bento-item h3 { font-size: 0.95rem; font-weight: 600; color: #9ca3af; margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.5rem; }
+
+.chart-box { height: 240px; width: 100%; }
+
+/* Doughnut Styles */
+.doughnut-container { position: relative; width: 180px; height: 180px; margin: auto; }
+.doughnut-label {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  display: flex; flex-direction: column; align-items: center;
+}
+.score-val { font-size: 2.5rem; font-weight: 800; line-height: 1; }
+.score-unit { font-size: 0.7rem; color: #6b7280; font-weight: 700; letter-spacing: 0.1em; }
+
+/* Wage Styles */
+.wage-stack { display: flex; flex-direction: column; gap: 0.75rem; }
+.wage-card {
+  background: rgba(255,255,255,0.02);
+  padding: 1rem;
+  border-radius: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.wage-name { display: block; font-size: 0.9rem; color: #d1d5db; }
+.wage-amt { display: block; font-weight: 700; font-size: 1.1rem; color: white; }
+.wage-done { background: none; border: none; color: #10b981; cursor: pointer; padding: 4px; }
+
+/* History Scores */
+.score-strip { display: flex; gap: 1rem; overflow-x: auto; padding-bottom: 0.5rem; }
+.log-card { min-width: 240px; background: rgba(255,255,255,0.02); padding: 1.25rem; border-radius: 18px; }
+.log-top { display: flex; justify-content: space-between; margin-bottom: 0.5rem; }
+.log-pts { font-weight: 700; color: var(--accent); }
+.log-progress { height: 4px; background: rgba(255,255,255,0.05); border-radius: 2px; margin-bottom: 0.75rem; }
+.log-progress div { height: 100%; background: var(--accent); border-radius: 2px; }
+.log-msg { font-size: 0.8rem; color: #6b7280; font-style: italic; }
+
+/* Offcanvas 2026 Override */
+.glass-offcanvas { background: rgba(3, 7, 18, 0.95) !important; backdrop-filter: blur(20px) !important; border-left: 1px solid var(--glass-border) !important; color: white !important; }
+
+@media (max-width: 1024px) {
+  .bento-container { grid-template-columns: 1fr; }
+  .span-2, .span-3 { grid-column: span 1; }
+  .dash-header { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
+}
+
+.loading-container { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; background: var(--dash-bg); color: #6b7280; gap: 1rem; }
+.spinner-2026 { width: 40px; height: 40px; border: 3px solid rgba(99, 102, 241, 0.1); border-top-color: var(--accent); border-radius: 50%; animation: spin 1s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
