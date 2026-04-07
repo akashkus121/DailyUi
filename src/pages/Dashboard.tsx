@@ -25,8 +25,11 @@ import {
   Activity,
   ArrowUpRight
 } from "lucide-react";
+import { useNavigate, useLocation } from "react-router-dom";
+import QuickActions from "../components/QuickActions";
 
 import "./Dashboard.css"; 
+
 
 ChartJS.register(
   CategoryScale, LinearScale, PointElement, LineElement, 
@@ -40,6 +43,7 @@ interface MoneyGiven { Id: number; userId: number; Amount: number; PersonName: s
 interface LifeScoreResult { HealthScore: number; ExpenseScore: number; TotalScore: number; Message: string; Date: string; }
 interface DashboardData { dashboard: DailyHealthCheck[]; ExpenseList: ExpenseEntry[]; PendingWages: MoneyGiven[]; LifeScores: LifeScoreResult[]; }
 
+
 const Dashboard: React.FC = () => {
   const [data, setData] = useState<DashboardData>({
     dashboard: [],
@@ -48,6 +52,17 @@ const Dashboard: React.FC = () => {
     LifeScores: [],
   });
   const [loading, setLoading] = useState(true);
+
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const isOn = (path: string) => location.pathname === path || location.pathname.startsWith(path + "/");
+
+  const healthTarget = isOn("/daily-health") ? "/" : "/daily-health";
+  const healthLabel = isOn("/daily-health") ? "Dashboard" : "Health";
+
+  const expenseTarget = isOn("/expense") ? "/" : "/expense";
+  const expenseLabel = isOn("/expense") ? "Dashboard" : "Expense";
 
   useEffect(() => {
     const fetchDashboard = async () => {
@@ -169,11 +184,7 @@ const Dashboard: React.FC = () => {
           <h1>System Overview</h1>
           <p>Real-time metrics for your health and finances.</p>
         </div>
-        <div className="quick-actions">
-          <button className="glass-action" data-bs-toggle="offcanvas" data-bs-target="#healthPanel"><Heart size={16}/> Health</button>
-          <button className="glass-action" data-bs-toggle="offcanvas" data-bs-target="#expensePanel"><Wallet size={16}/> Expense</button>
-          <button className="ai-trigger" data-bs-toggle="offcanvas" data-bs-target="#chatPanel"><MessageSquare size={16}/> AI Chat</button>
-        </div>
+        <QuickActions />
       </header>
 
       <div className="bento-container">
@@ -189,32 +200,30 @@ const Dashboard: React.FC = () => {
         </div>
 
         {/* Life Score Doughnut */}
-        <div className="bento-item">
-          <h3>Life Efficiency</h3>
-          <div className="doughnut-container">
-            <Doughnut 
-               data={{
-                 datasets: [{
-                   data: [data.LifeScores[0]?.TotalScore || 0, 100 - (data.LifeScores[0]?.TotalScore || 0)],
-                   backgroundColor: ['#6366f1', 'rgba(255,255,255,0.03)'],
-                   borderWidth: 0,
-                 }]
-               }} 
-               options={{
-    cutout: '82%', // ✅ Move it here
-    plugins: {
-      legend: { display: false },
-      tooltip: { enabled: false }
-    },
-    maintainAspectRatio: false
-  }}
-            />
-            <div className="doughnut-label">
-              <span className="score-val">{data.LifeScores[0]?.TotalScore || 0}</span>
-              <span className="score-unit">INDEX</span>
-            </div>
-          </div>
-        </div>
+       <div className="doughnut-container">
+  <Doughnut 
+    data={{
+      datasets: [{
+        data: [data.LifeScores[0]?.TotalScore || 0, 100 - (data.LifeScores[0]?.TotalScore || 0)],
+        backgroundColor: ['#6366f1', 'rgba(255,255,255,0.03)'],
+        borderWidth: 0,
+      }]
+    }} 
+    options={{
+      cutout: '82%',
+      plugins: {
+        legend: { display: false },
+        tooltip: { enabled: false }
+      },
+      maintainAspectRatio: false, // Ensures it stays in the container
+      responsive: true
+    }}
+  />
+  <div className="doughnut-label">
+    <span className="score-val">{data.LifeScores[0]?.TotalScore || 0}</span>
+    <span className="score-unit">INDEX</span>
+  </div>
+</div>
 
         {/* Expense History */}
         <div className="bento-item span-2">

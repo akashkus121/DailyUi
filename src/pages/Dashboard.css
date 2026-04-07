@@ -18,11 +18,12 @@
 .glow-1 { position: absolute; top: -10%; left: -10%; width: 40%; height: 40%; background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 70%); filter: blur(100px); }
 .glow-2 { position: absolute; bottom: -5%; right: -5%; width: 30%; height: 30%; background: radial-gradient(circle, rgba(16, 185, 129, 0.05) 0%, transparent 70%); filter: blur(100px); }
 
-.dash-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2.5rem; position: relative; z-index: 10; }
-.welcome-section h1 { font-size: 2.25rem; font-weight: 800; letter-spacing: -0.025em; }
-.welcome-section p { color: #9ca3af; margin-top: 0.5rem; }
+.dash-header { display: flex; gap: 1rem; align-items: center; margin-bottom: 2.5rem; position: relative; z-index: 10; }
+.welcome-section { display: flex; flex-direction: column; }
+.welcome-section h1 { font-size: 2.25rem; font-weight: 800; letter-spacing: -0.025em; margin: 0; }
+.welcome-section p { color: #9ca3af; margin: 0.25rem 0 0 0; }
 
-.quick-actions { display: flex; gap: 0.75rem; }
+.quick-actions, .global-quick-actions { display: flex; gap: 0.75rem; margin-left: auto; align-items: center; }
 .glass-action, .ai-trigger {
   padding: 0.6rem 1.2rem;
   border-radius: 12px;

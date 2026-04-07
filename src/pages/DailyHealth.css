@@ -1,0 +1,102 @@
+.health-container {
+  background: #030712;
+  min-height: 100vh;
+  padding: 2rem 5%;
+  color: white;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.health-header { margin-bottom: 2.5rem; position: relative; z-index: 10; display: flex; align-items: center; gap: 1rem; }
+.health-header h1 { font-size: 2.5rem; font-weight: 800; letter-spacing: -0.05em; margin: 0; }
+.health-header p { color: #9ca3af; margin: 0.25rem 0 0 0; }
+
+/* Ensure quick actions align to the right inside the header */
+.health-header .global-quick-actions { margin-left: auto; display: flex; gap: 0.75rem; align-items: center; }
+
+.health-grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 1.5rem;
+}
+
+.span-full { grid-column: span 2; }
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
+  padding: 1.5rem;
+}
+
+.glass-card h3 { font-size: 1.1rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 10px; }
+
+/* Modern Form */
+.modern-form { display: flex; flex-direction: column; gap: 1.25rem; }
+.input-field { display: flex; flex-direction: column; gap: 8px; }
+.input-field label { font-size: 0.85rem; color: #9ca3af; display: flex; align-items: center; gap: 6px; }
+.input-field input, .input-field textarea {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 12px;
+  color: white;
+  outline: none;
+}
+.input-field input:focus { border-color: #6366f1; background: rgba(255,255,255,0.08); }
+
+.submit-btn-health {
+  margin-top: 1rem;
+  background: #6366f1;
+  color: white;
+  border: none;
+  padding: 14px;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: 0.3s;
+}
+.submit-btn-health:hover { opacity: 0.9; transform: translateY(-2px); }
+
+/* AI Suggestion Box */
+.ai-suggestion-card { background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(251, 191, 36, 0.05)); border: 1px solid rgba(99, 102, 241, 0.2); }
+.ai-content p { line-height: 1.6; color: #e5e7eb; font-size: 0.95rem; }
+
+/* Chart Area */
+.chart-card-health { margin-top: 1.5rem; }
+.chart-height { height: 250px; }
+.filter-bar { display: flex; gap: 10px; margin-bottom: 1.5rem; }
+.filter-bar input { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: white; padding: 5px 10px; font-size: 0.8rem; }
+.filter-btn { background: #6366f1; border: none; border-radius: 8px; color: white; padding: 5px 15px; cursor: pointer; }
+
+/* Modern Table */
+.table-responsive { overflow-x: auto; }
+.modern-table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+.modern-table th { text-align: left; padding: 12px; color: #6b7280; font-size: 0.8rem; text-transform: uppercase; border-bottom: 1px solid rgba(255,255,255,0.05); }
+.modern-table td { padding: 16px 12px; border-bottom: 1px solid rgba(255,255,255,0.02); font-size: 0.9rem; }
+
+.pill { padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; }
+.pill-purple { background: rgba(99, 102, 241, 0.1); color: #818cf8; }
+.pill-rose { background: rgba(244, 63, 94, 0.1); color: #fb7185; }
+.pill-blue { background: rgba(14, 165, 233, 0.1); color: #38bdf8; }
+.food-cell { color: #9ca3af; font-style: italic; max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+@media (max-width: 900px) {
+  .health-grid { grid-template-columns: 1fr; }
+  .span-full { grid-column: span 1; }
+}
+
+.loading-state {
+  display: flex;
+  flex-direction: column; /* stack spinner and text vertically */
+  justify-content: center; /* vertical centering */
+  align-items: center;     /* horizontal centering */
+  height: 100vh;           /* full viewport height */
+  width: 100%;             /* full width */
+  text-align: center;
+}

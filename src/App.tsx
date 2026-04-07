@@ -6,6 +6,8 @@ import Dashboard from './pages/Dashboard';
 import UserProvider from './context/UserContext';
 import { ToastContainer } from "react-toastify";
 import './App.css';
+import ExpenseActions from './pages/ExpenseActions';
+
 
 function App() {
   return (
@@ -19,6 +21,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/daily-health" element={<DailyHealthForm />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path='/expense'    element={<ExpenseActions />} />
         </Routes>
       </Router>
     </UserProvider>

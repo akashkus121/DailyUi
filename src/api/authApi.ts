@@ -52,3 +52,49 @@ export const  DailyHealthSubmit = async (data: submitDailyHealth) => {
         }
       );
 }
+
+export const getHealthReport = async (from: string, to: string) => {
+  return await axios.get(`${API_URL}/DailyHealth/Healthreport`, {
+    params: { from, to }, // ✅ clean & safe
+    withCredentials: true,
+  });
+};
+
+
+export const getExpenseReport = async () => {
+  const res = await axios.get(`${API_URL}/Expense/expensereport`, {
+    withCredentials: true,
+  });
+  return res.data;
+};
+
+export const returnWage = async (id: number) => {
+  await axios.post(`${API_URL}/Expense/ReturnWage`, { id }, {
+    withCredentials: true,
+  });
+};
+
+export const createSalary = async (amount: number, dailyLimitExpenses: number) => {
+  // Send as FormData so backend [FromForm] binding works
+  const form = new FormData();
+  form.append("Amount", String(amount));
+  form.append("DailyLimitExpenses", String(dailyLimitExpenses));
+  return await axios.post(`${API_URL}/Expense/Create`, form, { withCredentials: true });
+};
+
+// Add Expense
+export const addExpense = async (amount: number) => {
+  const form = new FormData();
+  form.append("Amount", String(amount));
+  return await axios.post(`${API_URL}/Expense/AddExpense`, form, { withCredentials: true });
+};
+
+// Give Wage
+export const giveWage = async (amount: number, personName: string) => {
+  const form = new FormData();
+  form.append("amount", String(amount));
+  form.append("Amount", String(amount));
+  form.append("personName", personName);
+  form.append("PersonName", personName);
+  return await axios.post(`${API_URL}/Expense/GiveWage`, form, { withCredentials: true });
+};

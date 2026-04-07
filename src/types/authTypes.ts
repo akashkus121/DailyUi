@@ -17,3 +17,39 @@ export interface submitDailyHealth {
      Mood: number;
   Drink: number;
 }
+
+
+export interface HealthData {
+  createdAt: string;
+  sleepHours: number;
+  mood: number;
+  drink: number;
+  foodItems: string;
+}
+
+export interface HealthReport {
+  fromDate: string;
+  toDate: string;
+  healthData: HealthData[];
+  aiSuggestion: string;
+}
+
+export interface Expense {
+  createdAt: string;
+  amount: number;
+}
+
+export interface PendingWage {
+  id: number;
+  personName: string;
+  amount: number;
+  isReturned: boolean;
+}
+
+export interface ExpenseReport {
+  salary: number;
+  totalExpenses: number;
+  netSavings: number;
+  pendingWages: PendingWage[];
+  expenseList: Expense[];
+}
