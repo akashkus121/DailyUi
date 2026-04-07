@@ -23,6 +23,7 @@ const ExpenseActions: React.FC = () => {
   const [expense, setExpense] = useState(0);
   const [wageAmount, setWageAmount] = useState(0);
   const [person, setPerson] = useState("");
+  const [expenseDescription, setExpenseDescription] = useState("");
   const [data, setData] = useState<ExpenseReport>({
     salary: 0,
     totalExpenses: 0,
@@ -57,7 +58,7 @@ const ExpenseActions: React.FC = () => {
   };
 
   const handleExpense = async () => {
-    await addExpense(expense);
+    await addExpense(expense, expenseDescription);
     alert("Expense logged");
     fetchData();
   };
@@ -133,6 +134,7 @@ const ExpenseActions: React.FC = () => {
             <h4>Instant Expense</h4>
             <div className="form-stack">
               <input type="number" placeholder="Enter Amount" onChange={(e) => setExpense(Number(e.target.value))} />
+              <input type="text" placeholder="Expense Description (optional)" onChange={(e) => setExpenseDescription(e.target.value)} />
               <div className="spacer">Log this transaction instantly to your ledger.</div>
               <button className="btn-action rose" onClick={handleExpense}><Plus size={18}/> Deduct Balance</button>
             </div>

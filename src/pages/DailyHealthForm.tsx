@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { DailyHealthSubmit, getHealthReport } from "../api/authApi";
 import { Line } from "react-chartjs-2";
-import { Activity, Moon, Coffee, Smile, Filter, Send, Sparkles, Table as TableIcon } from "lucide-react";
+import { Activity, Moon, Coffee, Smile, Filter, Send, Sparkles, Table as TableIcon, User } from "lucide-react";
 import QuickActions from "../components/QuickActions";
 import "./DailyHealth.css"; // We'll create this next
 import { useLocation } from "react-router-dom";
+import UserProfile from "../components/User";
 
 const DailyHealthForm = () => {
   const [sleepHours, setSleepHours] = useState(0);
@@ -73,6 +74,7 @@ const DailyHealthForm = () => {
         <h1>Health Intelligence</h1>
         <p>Log your vitals and analyze AI-driven wellness patterns.</p>
         <QuickActions />
+        <UserProfile />
       </header>
 
       <div className="health-grid">

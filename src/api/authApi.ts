@@ -83,9 +83,10 @@ export const createSalary = async (amount: number, dailyLimitExpenses: number) =
 };
 
 // Add Expense
-export const addExpense = async (amount: number) => {
+export const addExpense = async (amount: number , description: string) => {
   const form = new FormData();
   form.append("Amount", String(amount));
+  form.append("Note", description);
   return await axios.post(`${API_URL}/Expense/AddExpense`, form, { withCredentials: true });
 };
 
