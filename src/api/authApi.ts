@@ -99,3 +99,12 @@ export const giveWage = async (amount: number, personName: string) => {
   form.append("PersonName", personName);
   return await axios.post(`${API_URL}/Expense/GiveWage`, form, { withCredentials: true });
 };
+
+export const sendOtp = async (data: { email: string }) => {
+  return await axios.post(`${API_URL}/Auth/forgot-password`, data);
+}
+
+export const resetPassword = async (data: { email: string; otp: string; newPassword: string }) => {
+  
+  return await axios.post(`${API_URL}/Auth/reset-password`, data);
+}

@@ -1,0 +1,82 @@
+/* Recovery / OTP Specific Styles */
+.back-to-login {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    width: 100%;
+    margin-top: 20px;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.back-to-login:hover {
+    color: var(--text-main);
+}
+
+.footer-text {
+    text-align: center;
+    margin-top: 25px;
+    color: var(--text-muted);
+    font-size: 14px;
+}
+
+.login-link {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s;
+}
+
+.login-link:hover {
+    color: var(--primary-hover);
+    text-decoration: underline;
+}
+
+/* Ensure headings inside the form look consistent */
+.login-form h3 {
+    color: var(--text-main);
+    font-size: 18px;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.centered-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centers the label and input wrapper */
+    width: 100%;
+}
+.input-wrapper {
+    width: 100%; /* Ensures input stays full width of the card */
+}
+
+.center-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 25px auto 0 auto; /* Horizontal auto margins center the button */
+    width: 100%; /* If you want it full width but centered text */
+    max-width: 280px; /* Optional: gives it a sleek centered look if not full width */
+}
+
+.back-to-login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 20px;
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.back-to-login:hover {
+    color: white;
+}

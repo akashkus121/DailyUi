@@ -60,14 +60,7 @@ const QuickActions: React.FC = () => {
         <Wallet size={16} /> {isOn("/expense") ? "Dashboard" : "Expense"}
       </button>
 
-      <button
-        type="button"
-        className="ai-trigger"
-        data-bs-toggle="offcanvas"
-        data-bs-target="#chatPanel"
-      >
-        <MessageSquare size={16} /> AI Chat
-      </button>
+      
     </div>
   );
 };
