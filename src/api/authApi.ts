@@ -1,7 +1,7 @@
 import axios from "axios";
 import { LoginRequest, submitDailyHealth, UserRegisterRequest } from "../types/authTypes";
 
-const API_URL = "https://localhost:5001/api";
+const API_URL = "http://localhost:8080/api";
 
 // authApi.ts
 export const registerUser = async (
@@ -68,10 +68,14 @@ export const getExpenseReport = async () => {
   return res.data;
 };
 
-export const returnWage = async (id: number) => {
-  await axios.post(`${API_URL}/Expense/ReturnWage`, { id }, {
-    withCredentials: true,
-  });
+export const returnWageAPI = async (id: number) => {
+  console.log("API ID:", id); // 👈 add this
+
+  return await axios.post(
+    `${API_URL}/Expense/ReturnWage`,
+    { id },
+    { withCredentials: true }
+  );
 };
 
 export const createSalary = async (amount: number, dailyLimitExpenses: number) => {
@@ -83,10 +87,11 @@ export const createSalary = async (amount: number, dailyLimitExpenses: number) =
 };
 
 // Add Expense
-export const addExpense = async (amount: number , description: string) => {
+export const addExpense = async (amount: number , description: string , category: string) => {
   const form = new FormData();
   form.append("Amount", String(amount));
   form.append("Note", description);
+  form.append("Category", category);
   return await axios.post(`${API_URL}/Expense/AddExpense`, form, { withCredentials: true });
 };
 
@@ -108,3 +113,4 @@ export const resetPassword = async (data: { email: string; otp: string; newPassw
   
   return await axios.post(`${API_URL}/Auth/reset-password`, data);
 }
+

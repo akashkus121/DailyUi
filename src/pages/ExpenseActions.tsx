@@ -14,16 +14,18 @@ import {
   Legend,
 } from "chart.js";
 import "./ExpenseActions.css";
+import toast from "react-hot-toast";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 const ExpenseActions: React.FC = () => {
   const [salary, setSalary] = useState(0);
   const [limit, setLimit] = useState(0);
-  const [expense, setExpense] = useState(0);
-  const [wageAmount, setWageAmount] = useState(0);
+  const [expense, setExpense] = useState("");
+const [wageAmount, setWageAmount] = useState("");
   const [person, setPerson] = useState("");
   const [expenseDescription, setExpenseDescription] = useState("");
+  const [expenseCategory, setExpenseCategory] = useState("");
   const [data, setData] = useState<ExpenseReport>({
     salary: 0,
     totalExpenses: 0,
@@ -52,22 +54,42 @@ const ExpenseActions: React.FC = () => {
   useEffect(() => { fetchData(); }, []);
 
   const handleSalary = async () => {
-    await createSalary(salary, limit);
-    alert("Financial profile updated");
+   const res= await createSalary(salary, limit);
+   if(res.status === 200){
+    toast.success("Salary updated successfully");
     fetchData();
+   }else{
+    toast.error("Failed to update salary");
+   }
+    
+   
   };
 
   const handleExpense = async () => {
-    await addExpense(expense, expenseDescription);
-    alert("Expense logged");
-    fetchData();
+   const res= await addExpense(Number(expense), expenseDescription, expenseCategory);
+    if(res.status === 200){
+      toast.success("Expense logged successfully");
+      setExpense("");
+      setExpenseDescription("");
+      setExpenseCategory("");
+      fetchData();
+    }else{
+      toast.error("Failed to log expense");
+    } 
   };
 
   const handleWage = async () => {
-    await giveWage(wageAmount, person);
-    alert("Wage transaction complete");
+  const res = await giveWage(Number(wageAmount), person);
+
+  if (res.status === 200) {
+    toast.success("Wage processed successfully");
+
+    setWageAmount(""); // reset clean
+    setPerson("");
+
     fetchData();
-  };
+  }
+};
 
   return (
     <div className="expense-root">
@@ -129,25 +151,65 @@ const ExpenseActions: React.FC = () => {
           </div>
 
           {/* Expense Action */}
-          <div className="glass-tile action-card">
-            <div className="icon-box rose"><Receipt size={24}/></div>
-            <h4>Instant Expense</h4>
-            <div className="form-stack">
-              <input type="number" placeholder="Enter Amount" onChange={(e) => setExpense(Number(e.target.value))} />
-              <input type="text" placeholder="Expense Description (optional)" onChange={(e) => setExpenseDescription(e.target.value)} />
-              <div className="spacer">Log this transaction instantly to your ledger.</div>
-              <button className="btn-action rose" onClick={handleExpense}><Plus size={18}/> Deduct Balance</button>
-            </div>
-          </div>
+<div className="glass-tile action-card">
+  <div className="icon-box rose">
+    <Receipt size={24} />
+  </div>
+
+  <h4>Instant Expense</h4>
+
+  <div className="form-stack">
+
+    <input
+  type="number"
+  placeholder="Enter Amount"
+  value={expense}
+  onChange={(e) => setExpense((e.target.value))}
+/>
+
+<select
+  value={expenseCategory}
+  onChange={(e) => setExpenseCategory(e.target.value)}
+>
+  <option value="" disabled>
+    Select Category
+  </option>
+  <option value="EMI">EMI</option>
+  <option value="Recharge">Recharge</option>
+  <option value="Food">Food</option>
+  <option value="Travel">Travel</option>
+  <option value="Shopping">Shopping</option>
+</select>
+
+<input
+  type="text"
+  placeholder="Expense Description (optional)"
+  value={expenseDescription}
+  onChange={(e) => setExpenseDescription(e.target.value)}
+/>
+
+    <div className="spacer">
+      Log this transaction instantly to your ledger.
+    </div>
+
+    <button className="btn-action rose" onClick={handleExpense}>
+      <Plus size={18} /> Deduct Balance
+    </button>
+  </div>
+</div>
 
           {/* Wage Action */}
           <div className="glass-tile action-card">
             <div className="icon-box amber"><Users size={24}/></div>
             <h4>Transfer Wage</h4>
             <div className="form-stack">
-              <input type="text" placeholder="Person Name" onChange={(e) => setPerson(e.target.value)} />
-              <input type="number" placeholder="Amount" onChange={(e) => setWageAmount(Number(e.target.value))} />
-              <button className="btn-action amber" onClick={handleWage}><ArrowRight size={18}/> Process Wage</button>
+              <input type="text" placeholder="Person Name" value={person} onChange={(e) => setPerson(e.target.value)} />
+<input
+  type="number"
+  placeholder="Amount"
+  value={wageAmount}
+  onChange={(e) => setWageAmount(e.target.value)}
+/>              <button className="btn-action amber" onClick={handleWage}><ArrowRight size={18}/> Process Wage</button>
             </div>
           </div>
 
