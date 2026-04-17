@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { dashboardData } from "../api/authApi";
+import { dashboardData, returnWageAPI } from "../api/authApi";
 import { Line, Bar, Doughnut } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -126,13 +126,23 @@ const Dashboard: React.FC = () => {
     };
     fetchDashboard();
   }, []);
+      
 
-  const returnWage = async (id: number) => {
-    setData((prev) => ({
-      ...prev,
-      PendingWages: prev.PendingWages.map((w) => (w.Id === id ? { ...w, IsReturned: true } : w)),
-    }));
-  };
+const returnWage = async (id: number) => {
+  try {
+    const res = await returnWageAPI(id);
+
+    if (res.status === 200) {
+      setData(prev => ({
+        ...prev,
+        PendingWages: prev.PendingWages.filter(w => w.Id !== id)
+      }));
+    }
+
+  } catch (err) {
+    console.error("Error returning wage:", err);
+  }
+};
 
   if (loading) return (
     <div className="loading-container">

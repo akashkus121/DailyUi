@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { registerUser } from "../api/authApi";
 import { Mail, Lock, User, Camera, Loader2, ArrowRight } from "lucide-react";
+import { data, useNavigate } from "react-router-dom";
 
 
 const Register = () => {
@@ -9,6 +10,7 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [avatar, setAvatar] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const naviagete=useNavigate();
 
 const handleRegister = async (e: React.FormEvent) => {
   e.preventDefault();
@@ -16,15 +18,32 @@ const handleRegister = async (e: React.FormEvent) => {
 
   const avatarFile = (document.getElementById("avatar-input") as HTMLInputElement)?.files?.[0];
 
-  try {
-    await registerUser({ Name: name, Email: email, Password: password }, avatarFile);
-    alert("Registration successful");
-  } catch (err: any) {
-    console.error(err.response?.data || err);
-    alert("Registration failed: " + (err.response?.data?.message || err.message));
-  } finally {
-    setIsLoading(false);
+ try {
+  const res = await registerUser(
+    { Name: name, Email: email, Password: password },
+    avatarFile
+  );
+
+  const data = res.data || res;
+
+  if (data.success) {
+    alert(data.message || "Registration successful!");
+    naviagete("/"); // Redirect to login page after successful registration
+    
   }
+
+} catch (err: any) {
+  const errorMessage =
+    err?.response?.data?.message ||
+    err?.response?.data?.StatusCode ||
+    err.message ||
+    "Something went wrong";
+
+  alert("Registration failed: " + errorMessage);
+
+} finally {
+  setIsLoading(false);
+}
 };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
