@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { createSalary, addExpense, giveWage, getExpenseReport } from "../api/authApi";
+import React, { useEffect, useState, useMemo } from "react";import { createSalary, addExpense, giveWage, getExpenseReport } from "../api/authApi";
 import { ExpenseReport } from "../types/authTypes";
 import { Bar } from "react-chartjs-2";
 import QuickActions from "../components/QuickActions";
@@ -65,6 +64,25 @@ const [wageAmount, setWageAmount] = useState("");
    
   };
 
+  const chartData = useMemo(() => {
+  return {
+    labels: data.expenseList.map((e) => {
+      const dt = (e as any).CreatedAt ?? e.createdAt;
+      return dt ? new Date(dt).toLocaleDateString() : "";
+    }),
+    datasets: [
+      {
+        label: "Spending",
+        data: data.expenseList.map((e) =>
+          Number((e as any).Amount ?? e.amount ?? 0)
+        ),
+        backgroundColor: "#10b981",
+        borderRadius: 8,
+      },
+    ],
+  };
+}, [data.expenseList]);
+
   const handleExpense = async () => {
    const res= await addExpense(Number(expense), expenseDescription, expenseCategory);
     if(res.status === 200){
@@ -114,15 +132,7 @@ const [wageAmount, setWageAmount] = useState("");
           </div>
           <div className="chart-container-finance">
             <Bar
-              data={{
-                labels: data.expenseList.map((e) => new Date(((e as any).CreatedAt ?? e.createdAt)).toLocaleDateString()),
-                datasets: [{
-                  label: "Spending",
-                  data: data.expenseList.map((e) => Number((e as any).Amount ?? e.amount ?? 0)),
-                  backgroundColor: "#10b981",
-                  borderRadius: 8,
-                }],
-              }}
+              data={chartData}
               options={{ 
                 responsive: true, 
                 maintainAspectRatio: false, 
@@ -159,19 +169,16 @@ const [wageAmount, setWageAmount] = useState("");
   <h4>Instant Expense</h4>
 
   <div className="form-stack">
-
     <input
   type="number"
   placeholder="Enter Amount"
   value={expense}
   onChange={(e) => setExpense((e.target.value))}
 />
-
 <select
   value={expenseCategory}
   onChange={(e) => setExpenseCategory(e.target.value)}
->
-  <option value="" disabled>
+><option value="" disabled>
     Select Category
   </option>
   <option value="EMI">EMI</option>

@@ -1,7 +1,7 @@
 import axios from "axios";
 import { LoginRequest, submitDailyHealth, UserRegisterRequest } from "../types/authTypes";
 
-const API_URL = "http://localhost:8080/api";
+const API_URL = "https://localhost:7228/api";
 
 // authApi.ts
 export const registerUser = async (
@@ -30,9 +30,10 @@ export const loginUser = async (data: LoginRequest) => {
 };
 
 export const dashboardData = async () => {
-  return await axios.get(`${API_URL}/Auth/dashboard-json`, {
+  const res = await axios.get(`${API_URL}/Auth/dashboard-json`, {
     withCredentials: true,
   });
+  return res.data?.data ?? res.data?.Data ?? res.data;
 }
 
 
@@ -65,7 +66,9 @@ export const getExpenseReport = async () => {
   const res = await axios.get(`${API_URL}/Expense/expensereport`, {
     withCredentials: true,
   });
-  return res.data;
+  // API wraps payload in an ApiResponse { success,message,statusCode,data }
+  // normalize to return the inner data object so callers receive the model directly
+  return res.data?.data ?? res.data?.Data ?? res.data;
 };
 
 export const returnWageAPI = async (id: number) => {
