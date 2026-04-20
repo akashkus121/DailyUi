@@ -20,7 +20,7 @@ const handleRegister = async (e: React.FormEvent) => {
 
  try {
   const res = await registerUser(
-    { Name: name, Email: email, Password: password },
+    { Name: name, Email: email, Password: password   },
     avatarFile
   );
 

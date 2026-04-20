@@ -1,5 +1,6 @@
 import { useContext, createContext, useState, useEffect } from "react";
 import axios from "axios";
+import { getuser } from "../api/authApi";
 
 const UserContext = createContext<any>(null);
 
@@ -9,15 +10,12 @@ function UserProvider({ children }: any) {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await axios.get("/api/auth/me", {
-          withCredentials: true,
-        });
+        const res = await getuser();
         setUser(res.data);
       } catch (err) {
         console.error("Failed to fetch user:", err);
       }
     };
-
     fetchUser(); // ✅ CALL THE FUNCTION
   }, []); // ✅ dependency array
 
